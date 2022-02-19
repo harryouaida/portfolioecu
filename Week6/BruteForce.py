@@ -1,3 +1,4 @@
+#This Script was created by Hashem Ouaida in Feb 2022
 import random
 import string
 import hashlib
