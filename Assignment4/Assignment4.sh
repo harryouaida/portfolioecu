@@ -8,14 +8,8 @@
 
 
 menu(){
-rm hash.txt
-#Clean up the documents for security and tidyness
-rm clean.txt
-rm clean1.txt
-rm output.txt
-#This Function will set up the Menu system
-while :
-do
+
+  echo "Access Granted"
 
     Introduction="$(awk -F ":" '{ print $1 }' clean.txt)"
     Selection1="$(awk -F ":" '{ print $2 }' clean.txt)"
@@ -25,10 +19,24 @@ do
     Selection5="$(awk -F ":" '{ print $6 }' clean.txt)"
     Selection6="$(awk -F ":" '{ print $7 }' clean.txt)"
     Selection7="$(awk -F ":" '{ print $8 }' clean.txt)"
+    echo "$Introduction"
+
+rm hash.txt
+#Clean up the documents for security and tidyness
+rm clean.txt
+rm clean1.txt
+rm output.txt
+#This Function will set up the Menu system
+
+
+while :
+do
+
+    
     clear
     cat<<EOF
 
-    "$Introduction"
+    
 
     ======================================
      Cyber Security Topics
@@ -106,7 +114,7 @@ hash=$(cat hash.txt)
 if [ "$secret" = "$hash" ]; then
 
  
-    echo "Access Granted"
+  
 
 
 
@@ -129,3 +137,10 @@ menu
                         exit 1
 
                         fi
+
+
+
+
+
+
+
