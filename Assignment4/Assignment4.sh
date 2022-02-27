@@ -8,7 +8,7 @@
 
 
 menu(){
-
+#This Function will set up the Menu system
 while :
 do
     clear
@@ -23,7 +23,7 @@ do
 
     Deekfake synthetic identity fraud (1)
     Fraud-as-a-Service (2)
-    Real Time payments fraud(3)
+    Real-time payments fraud(3)
     Fast credit fraud(4)
     Ransomware attacks(5)
     Marketplace scams(6)
@@ -50,18 +50,42 @@ done
 
 }
 
+
+retrieve(){
+#This function will retrieve the web data
 curl -o output.txt https://cybernews.com/security/top-cybersecurity-threats-of-2022-report/ 
 
-#Time to clean the output. This section will remove everything in the output that we do not need. Anything within the 
-#<p> and the </P> is of interest in this webpage and also to remove HTML tags. The script will inert dilimeters before
-#numbers within the filtered text to assit in the awk commands later
+}
+
+cleanup(){
+
 cat output.txt | grep "<p>" | sed 's/<[^>]*>//g' | sed 's/:/ /' | sed '/^[0-9]/ s/^/:/'  > clean.txt
 
-#The script 
+#This function will clean up the data
 cat clean.txt | tr -s '\n' ' ' > clean1.txt
 
 cat clean1.txt > clean.txt 
-#The script will now use Awk commands to put a delimiter in front of numbers to organise rows and columns
+
+}
+
+
+#Ask the user to enter a secret password that will be hidden from Shoulder Surfers
+
+read -sp 'Please enter the password in order to enter this script: ' password
+
+#Hash password into temp file hash.txt
+
+echo $password | sha256sum >> hash.txt
+
+
+
+secret="6b3a55e0261b0304143f805a24924d0c1c44524821305f31d9277843b8a10f4e  -"
+
+#Retreiving Hashed password from Secret.txt file and putting into the 'hash' variable
+
+hash=$(cat hash.txt)
+
+
 
 Introduction="$(awk -F ":" '{ print $1 }' clean.txt)"
 Selection1="$(awk -F ":" '{ print $2 }' clean.txt)"
@@ -72,10 +96,33 @@ Selection5="$(awk -F ":" '{ print $6 }' clean.txt)"
 Selection6="$(awk -F ":" '{ print $7 }' clean.txt)"
 Selection7="$(awk -F ":" '{ print $8 }' clean.txt)"
 
+#comparing the two hashed varbables, and granted or denying access. Also removing the temporary file
+
+if [ "$secret" = "$hash" ]; then
+
+    echo "Access Granted"
+
+
+#Clean up the documents for security and tidyness
 rm clean.txt
 rm clean1.txt
 rm output.txt
 
-
-
+#Call the functions
+retrieve
+cleanup
 menu
+
+        rm hash.txt
+
+            exit 0
+
+            else    
+                echo ""
+                echo "Access Denied. Please run the command again and enter the correct Password to get access to this script!"
+                #Advising the user that in order to access this script they need the password
+                    rm hash.txt
+
+                        exit 1
+
+                        fi
