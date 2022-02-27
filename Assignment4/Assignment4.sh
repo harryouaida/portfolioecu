@@ -8,9 +8,23 @@
 
 
 menu(){
+rm hash.txt
+#Clean up the documents for security and tidyness
+rm clean.txt
+rm clean1.txt
+rm output.txt
 #This Function will set up the Menu system
 while :
 do
+
+    Introduction="$(awk -F ":" '{ print $1 }' clean.txt)"
+    Selection1="$(awk -F ":" '{ print $2 }' clean.txt)"
+    Selection2="$(awk -F ":" '{ print $3 }' clean.txt)"
+    Selection3="$(awk -F ":" '{ print $4 }' clean.txt)"
+    Selection4="$(awk -F ":" '{ print $5 }' clean.txt)"
+    Selection5="$(awk -F ":" '{ print $6 }' clean.txt)"
+    Selection6="$(awk -F ":" '{ print $7 }' clean.txt)"
+    Selection7="$(awk -F ":" '{ print $8 }' clean.txt)"
     clear
     cat<<EOF
 
@@ -86,34 +100,22 @@ secret="6b3a55e0261b0304143f805a24924d0c1c44524821305f31d9277843b8a10f4e  -"
 hash=$(cat hash.txt)
 
 
-
-Introduction="$(awk -F ":" '{ print $1 }' clean.txt)"
-Selection1="$(awk -F ":" '{ print $2 }' clean.txt)"
-Selection2="$(awk -F ":" '{ print $3 }' clean.txt)"
-Selection3="$(awk -F ":" '{ print $4 }' clean.txt)"
-Selection4="$(awk -F ":" '{ print $5 }' clean.txt)"
-Selection5="$(awk -F ":" '{ print $6 }' clean.txt)"
-Selection6="$(awk -F ":" '{ print $7 }' clean.txt)"
-Selection7="$(awk -F ":" '{ print $8 }' clean.txt)"
-
 #comparing the two hashed varbables, and granted or denying access. Also removing the temporary file
+
 
 if [ "$secret" = "$hash" ]; then
 
+ 
     echo "Access Granted"
 
 
-#Clean up the documents for security and tidyness
-rm clean.txt
-rm clean1.txt
-rm output.txt
 
 #Call the functions
 retrieve
 cleanup
 menu
 
-        rm hash.txt
+       
 
             exit 0
 
@@ -122,6 +124,7 @@ menu
                 echo "Access Denied. Please run the command again and enter the correct Password to get access to this script!"
                 #Advising the user that in order to access this script they need the password
                     rm hash.txt
+                   
 
                         exit 1
 
